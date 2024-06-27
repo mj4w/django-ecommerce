@@ -1,4 +1,4 @@
-# packages NEEDED
+## packages
 
 django
 python-dotenv
@@ -6,7 +6,7 @@ djangorestframework
 pytest
 pytest-django
 
-# Commands
+## commands
 
 - django-admin startproject (project-name)
 - py manage.py runserver
