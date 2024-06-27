@@ -1,6 +1,6 @@
 db.sqlite3
 .env
 .pytest_cache
-**_pychache__/
+**_pycache__/
 .coverage
 env
