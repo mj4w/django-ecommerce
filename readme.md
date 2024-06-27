@@ -1,10 +1,12 @@
 ## packages
 
-django
-python-dotenv
-djangorestframework
-pytest
-pytest-django
+- django
+- python-dotenv
+- djangorestframework
+- pytest
+- pytest-django
+- black
+- flake8
 
 ## commands
 

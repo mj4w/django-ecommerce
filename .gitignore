@@ -1,2 +1,6 @@
 db.sqlite3
 .env
+.pytest_cache
+**_pychache__/
+.coverage
+env
