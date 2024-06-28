@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 
+import sentry_sdk
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -18,10 +19,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # internal apps
-    ""
     # external packages
     "rest_framework",
+    "drf_spectacular",
+    # internal apps
+    "ecommerce.product",
 ]
 
 MIDDLEWARE = [
@@ -75,4 +77,9 @@ USE_TZ = True
 STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-REST_FRAMEWORK = {}
+REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+SPECTACULAR_SETTINGS = {
+    "TITLE": "DRF Ecommerce",
+}
