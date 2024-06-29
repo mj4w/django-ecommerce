@@ -1,10 +1,11 @@
 from django.db import connection
 from django.shortcuts import render
+from django.utils import timezone
 from drf_spectacular.utils import extend_schema
 from pygments import highlight
 from pygments.formatters import TerminalFormatter
 from pygments.lexers import SqlLexer
-from rest_framework import viewsets
+from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from sqlparse import format
@@ -48,7 +49,9 @@ class ProductView(viewsets.ViewSet):
 
     @extend_schema(responses=ProductSerializer)
     def list(self, request):
-        queryset = Product.objects.all().isactive()  # to filter all is_active=True
+        queryset = (
+            Product.objects.filter(date_deleted__isnull=True).distinct().isactive()
+        )
         serializer = ProductSerializer(
             queryset, many=True
         )  # many=true to define multiple categories
@@ -98,3 +101,35 @@ class ProductView(viewsets.ViewSet):
         )  # using iexact for not case sensitive the category name
 
         return Response(serializer.data)
+
+    @action(
+        methods=["delete"],
+        detail=False,
+        url_path=r"delete/(?P<pk>[0-9]+)/",
+    )
+    @extend_schema(
+        parameters=[
+            {
+                "name": "pk",
+                "in": "path",
+                "required": True,
+                "schema": {
+                    "type": "integer",
+                },
+            }
+        ],
+        responses={204: None, 404: None},
+    )
+    def delete_product(self, request, pk=None):
+        """
+        Delete a product
+        """
+        try:
+            product = Product.objects.get(pk=pk, date_deleted__isnull=True)
+        except Product.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        product.date_deleted = timezone.now()
+        product.save()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)

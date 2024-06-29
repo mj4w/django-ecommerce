@@ -7,7 +7,7 @@ from ecommerce.product import views
 
 from .sentry import trigger_error
 
-router = DefaultRouter()
+router = DefaultRouter(trailing_slash=False)
 router.register(r"category", views.CategoryView, basename="category")
 router.register(r"brand", views.BrandView, basename="brand")
 router.register(r"product", views.ProductView, basename="product")

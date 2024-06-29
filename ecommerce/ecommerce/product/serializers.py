@@ -37,6 +37,7 @@ class ProductSerializer(serializers.ModelSerializer):
             "slug",
             "description",
             "brand_name",
+            "date_deleted",
             "category_name",
             "product_line",
         )

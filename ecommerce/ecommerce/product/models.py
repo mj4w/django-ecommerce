@@ -40,6 +40,7 @@ class Product(models.Model):
         "Category", on_delete=models.SET_NULL, null=True, blank=True
     )
     slug = models.SlugField(max_length=255, blank=True)
+    date_deleted = models.DateTimeField(blank=True, null=True)
     is_active = models.BooleanField(default=False)
 
     objects = ActiveQuerySet.as_manager()
