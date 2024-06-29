@@ -7,13 +7,15 @@ class CategoryFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Category
 
-    name = "test_category"
+    name = factory.Sequence(lambda n: "Category_%d" % n)
+    # name = "test_category"
 
 
 class BrandFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Brand
 
+    name = factory.Sequence(lambda n: "Brand_%d" % n)
     name = "test_brand"
 
 
