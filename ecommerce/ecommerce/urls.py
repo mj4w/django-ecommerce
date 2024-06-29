@@ -8,9 +8,9 @@ from ecommerce.product import views
 from .sentry import trigger_error
 
 router = DefaultRouter()
-router.register(r"category", views.CategoryView)
-router.register(r"brand", views.BrandView)
-router.register(r"product", views.ProductView)
+router.register(r"category", views.CategoryView, basename="category")
+router.register(r"brand", views.BrandView, basename="brand")
+router.register(r"product", views.ProductView, basename="product")
 
 urlpatterns = [
     path("admin/", admin.site.urls),
