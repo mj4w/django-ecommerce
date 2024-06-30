@@ -61,7 +61,8 @@ class ProductView(viewsets.ViewSet):
 
     def retrieve(self, request, slug=None):
         queryset = (
-            Product.objects.filter(slug=slug)
+            Product.objects.filter(slug=slug, date_deleted__isnull=True)
+            .distinct()
             .select_related("category", "brand")
             .isactive()
         )  # to filter all is_active=True
@@ -92,9 +93,13 @@ class ProductView(viewsets.ViewSet):
         """
         An endpoint to return products by category
         """
-        queryset = Product.objects.filter(
-            category__name__iexact=category_name
-        ).isactive()  # to filter all is_active=True
+        queryset = (
+            Product.objects.filter(
+                category__name__iexact=category_name, date_deleted__isnull=True
+            )
+            .distinct()
+            .isactive()
+        )  # to filter all is_active=True
         serializer = ProductSerializer(
             queryset,
             many=True,
@@ -105,7 +110,7 @@ class ProductView(viewsets.ViewSet):
     @action(
         methods=["delete"],
         detail=False,
-        url_path=r"delete/(?P<pk>[0-9]+)/",
+        url_path=r"delete/(?P<pk>[0-99999]+)/",
     )
     @extend_schema(
         parameters=[
