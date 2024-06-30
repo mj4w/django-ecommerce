@@ -21,6 +21,7 @@ class CategoryView(viewsets.ViewSet):
 
     @extend_schema(responses=CategorySerializer)
     def list(self, request):
+
         queryset = Category.objects.all().isactive()
         serializer = CategorySerializer(
             queryset, many=True
@@ -86,16 +87,15 @@ class ProductView(viewsets.ViewSet):
     @action(
         methods=["get"],
         detail=False,
-        url_path=r"category/(?P<category_name>\w+)/all",
-        url_name="all",
+        url_path=r"category/(?P<slug>[\w-]+)",
     )
-    def list_category(self, request, category_name=None):
+    def list_product_by_category_slug(self, request, slug=None):
         """
         An endpoint to return products by category
         """
         queryset = (
             Product.objects.filter(
-                category__name__iexact=category_name, date_deleted__isnull=True
+                category__slug__iexact=slug, date_deleted__isnull=True
             )
             .distinct()
             .isactive()
