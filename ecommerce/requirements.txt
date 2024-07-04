@@ -20,6 +20,8 @@ djangorestframework-simplejwt==5.3.1
 djoser==2.2.3
 drf-spectacular==0.27.2
 exceptiongroup==1.2.1
+factory-boy==3.3.0
+Faker==26.0.0
 idna==3.7
 inflection==0.5.1
 iniconfig==2.0.0
@@ -30,16 +32,20 @@ mysqlclient==2.2.4
 oauthlib==3.2.2
 packaging==24.1
 pathspec==0.12.1
+pillow==10.4.0
 platformdirs==4.2.2
 pluggy==1.5.0
 psycopg2-binary==2.9.9
 pycparser==2.22
+Pygments==2.18.0
 PyJWT==2.8.0
 pytest==8.2.2
 pytest-cov==5.0.0
 pytest-cover==3.0.0
 pytest-coverage==0.0
 pytest-django==4.8.0
+pytest-factoryboy==2.7.0
+python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
 python3-openid==3.2.0
 pytz==2024.1
@@ -49,6 +55,7 @@ requests==2.32.3
 requests-oauthlib==2.0.0
 rpds-py==0.18.1
 sentry-sdk==2.7.1
+six==1.16.0
 social-auth-app-django==5.4.1
 social-auth-core==4.5.4
 sqlparse==0.5.0

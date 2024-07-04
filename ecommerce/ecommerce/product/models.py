@@ -83,3 +83,27 @@ class ProductLine(models.Model):
 
     def __str__(self):
         return self.product.name
+
+
+class ProductImage(models.Model):
+    name = models.CharField(max_length=100, blank=True, null=True)
+    alternative_text = models.CharField(max_length=100, blank=True, null=True)
+    url = models.ImageField(upload_to=None)
+    productLine = models.ForeignKey(
+        ProductLine, on_delete=models.CASCADE, related_name="product_image"
+    )
+    order = OrderField(unique_for_field="productLine", blank=True, null=True)
+
+    def clean_fields(self, exclude=None):
+        super().clean_fields(exclude=exclude)
+        qs = ProductImage.objects.filter(productLine=self.productLine)
+        for obj in qs:
+            if self.id != obj.id and self.order == obj.order:
+                raise ValueError("Duplicate Value")
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        return super(ProductImage, self).save(*args, **kwargs)
+
+    def _str__(self):
+        return self.name
